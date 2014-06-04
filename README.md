@@ -12,6 +12,11 @@ You need the NaCl SDK to build this code and the Google Chrome browser version
 
 See https://developer.chrome.com/native-client/sdk/download
 
+live test
+=========
+
+http://cauldrondevelopment.com/nacl_cryptocore/
+
 build
 =====
     export NACL_SDK_ROOT=<path to nacl sdk>
@@ -21,5 +26,5 @@ build
 
 usage
 =====
-With cryptocore.pexe built point your Google Chrome browser at the top
+With *cryptocore.pexe* built point your Google Chrome browser at the top
 directory.

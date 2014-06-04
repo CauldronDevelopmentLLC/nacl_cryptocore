@@ -67,6 +67,8 @@ function CryptoCore(id, on_loaded) {
 
     var self = this;
     var div = $('#' + this.id).get(0);
+    div.addEventListener('loadstart', function () {self.loading();}, true);
+    div.addEventListener('progress', function (e) {self.progress(e);}, true);
     div.addEventListener('load', function () {self.loaded();}, true);
     div.addEventListener('message', function (e) {self.message(e);}, true);
     div.addEventListener('error', function (e) {self.error(e);}, true);
@@ -82,16 +84,32 @@ function CryptoCore(id, on_loaded) {
 
 CryptoCore.prototype.loading = function() {
     debug("NaCl module loading");
+    $('#loading').text('Loading NaCl module');
     return false;
 }
 
 
 CryptoCore.prototype.loaded = function() {
     debug("NaCl module loaded");
+
+    $('#loading').text('Done loading NaCl module');
+
     this.module = $('#' + this.id + '-embed').get(0);
 
     if (typeof this.on_loaded != 'undefined') this.on_loaded(this);
 
+    return false;
+}
+
+
+CryptoCore.prototype.progress = function(event) {
+    var default_total = 5000000;
+    var total = event.total ? event.total : default_total;
+    if (default_total * 100 < total ) total = default_total // Sanity check
+
+    var percent = (event.loaded / total * 100.0).toFixed(1);
+
+    $('#loading').text('Loading NaCl module ' + percent + '%');
     return false;
 }
 
